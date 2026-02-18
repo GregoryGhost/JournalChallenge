@@ -1,0 +1,6 @@
+﻿services:
+  journalchallenge.presentation:
+    image: journalchallenge.presentation
+    build:
+      context: .
+      dockerfile: JournalChallenge.Presentation/Dockerfile
