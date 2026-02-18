@@ -6,4 +6,17 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="FluentAssertions" Version="8.8.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.24" />
+        <PackageReference Include="NUnit" Version="4.4.0" />
+        <PackageReference Include="Shouldly" Version="4.3.0" />
+        <PackageReference Include="NetArchTest.Rules" Version="1.3.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\JournalChallenge.Application.Core\JournalChallenge.Application.Core.csproj" />
+      <ProjectReference Include="..\JournalChallenge.Infrastructure.Core\JournalChallenge.Infrastructure.Core.csproj" />
+    </ItemGroup>
+
 </Project>

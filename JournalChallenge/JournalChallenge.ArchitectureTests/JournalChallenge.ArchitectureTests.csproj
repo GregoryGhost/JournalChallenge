@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -11,20 +11,17 @@
 
     <ItemGroup>
         <PackageReference Include="coverlet.collector" Version="8.0.0">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
-        <PackageReference Include="FluentAssertions" Version="8.8.0" />
-        <PackageReference Include="FluentValidation.Validators.UnitTestExtension" Version="1.12.0.2" />
-        <PackageReference Include="RichardSzalay.MockHttp" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="NUnit.Framework"/>
-    </ItemGroup>
-
-    <ItemGroup>
+      <ProjectReference Include="..\JournalChallenge.Application\JournalChallenge.Application.csproj" />
+      <ProjectReference Include="..\JournalChallenge.Domain\JournalChallenge.Domain.csproj" />
+      <ProjectReference Include="..\JournalChallenge.Infrastructure\JournalChallenge.Infrastructure.csproj" />
+      <ProjectReference Include="..\JournalChallenge.Presentation\JournalChallenge.Presentation.csproj" />
       <ProjectReference Include="..\JournalChallenge.Tests.Core\JournalChallenge.Tests.Core.csproj" />
     </ItemGroup>
 
