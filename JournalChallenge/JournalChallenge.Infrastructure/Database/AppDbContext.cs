@@ -1,13 +1,16 @@
 ﻿namespace JournalChallenge.Infrastructure.Database;
 
 using JournalChallenge.Application.Abstractions.Data;
+using JournalChallenge.Domain.Journal;
 
 using Microsoft.EntityFrameworkCore;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IApplicationDbContext
 {
-    public DbSet<TestEntity> Tests { get; set; } = null!;
-    
+    public DbSet<ExceptionJournal> ExceptionJournals { get; set; }
+
+    public DbSet<Node> Nodes { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
