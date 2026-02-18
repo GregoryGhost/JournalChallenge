@@ -1,5 +1,7 @@
 ﻿namespace JournalChallenge.Application.Core.Abstractions.ErrorHandling;
 
+using CSharpFunctionalExtensions;
+
 public class DomainError(string message, ErrorType errorType): IError<DomainError>
 {
     public string Message { get; } = message;

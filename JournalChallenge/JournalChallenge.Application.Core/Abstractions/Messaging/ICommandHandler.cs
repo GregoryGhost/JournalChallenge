@@ -1,5 +1,7 @@
 ﻿namespace JournalChallenge.Application.Core.Abstractions.Messaging;
 
+using CSharpFunctionalExtensions;
+
 using JournalChallenge.Application.Core.Abstractions.ErrorHandling;
 
 public interface ICommandHandler<in TCommand>

@@ -6,4 +6,17 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.24" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="JournalChallenge.Application.Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\JournalChallenge.Application.Core\JournalChallenge.Application.Core.csproj" />
+      <ProjectReference Include="..\JournalChallenge.Domain\JournalChallenge.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

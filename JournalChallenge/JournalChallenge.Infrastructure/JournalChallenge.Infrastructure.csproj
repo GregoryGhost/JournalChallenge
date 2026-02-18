@@ -6,4 +6,16 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.24" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
+        <PackageReference Include="Ulid" Version="1.4.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\JournalChallenge.Application\JournalChallenge.Application.csproj" />
+      <ProjectReference Include="..\JournalChallenge.Infrastructure.Core\JournalChallenge.Infrastructure.Core.csproj" />
+    </ItemGroup>
+
 </Project>

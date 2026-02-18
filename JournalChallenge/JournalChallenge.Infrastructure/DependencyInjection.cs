@@ -1,5 +1,11 @@
 ﻿namespace JournalChallenge.Infrastructure;
 
+using JournalChallenge.Infrastructure.Core.Implementations.Extentions;
+using JournalChallenge.Infrastructure.Database;
+
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(
