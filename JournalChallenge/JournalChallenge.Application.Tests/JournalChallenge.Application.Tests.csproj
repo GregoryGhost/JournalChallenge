@@ -17,15 +17,19 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
         <PackageReference Include="FluentAssertions" Version="8.8.0" />
         <PackageReference Include="FluentValidation.Validators.UnitTestExtension" Version="1.12.0.2" />
+        <PackageReference Include="NUnit3TestAdapter" Version="6.1.0" />
         <PackageReference Include="RichardSzalay.MockHttp" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="NUnit.Framework"/>
+        <Using Include="NUnit.Framework" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\JournalChallenge.Tests.Core\JournalChallenge.Tests.Core.csproj" />
+      <ProjectReference Include="..\JournalChallenge.Application\JournalChallenge.Application.csproj" />
+      <ProjectReference Include="..\JournalChallenge.Infrastructure\JournalChallenge.Infrastructure.csproj" />
+      <ProjectReference Include="..\JournalChallenge.Domain\JournalChallenge.Domain.csproj" />
     </ItemGroup>
 
 </Project>

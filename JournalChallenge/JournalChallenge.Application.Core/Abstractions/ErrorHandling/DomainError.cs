@@ -24,5 +24,8 @@ public class DomainError(string message, ErrorType errorType): IError<DomainErro
     public static IError<DomainError> Validation(string message) =>
         new DomainError(message, ErrorType.Validation);
 
+    public static IError<DomainError> Secure(string message) =>
+        new DomainError(message, ErrorType.Secure);
+
     public DomainError Error => this;
 }
