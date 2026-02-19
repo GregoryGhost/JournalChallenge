@@ -5,12 +5,27 @@ Accept: application/json
 
 ###
 
-GET {{JournalChallenge.Presentation_HostAddress}}/api.test/exception
+POST {{JournalChallenge.Presentation_HostAddress}}/api.user.tree.get?treeName=TestTree
 Accept: application/json
 
 ###
 
-GET {{JournalChallenge.Presentation_HostAddress}}/api.test/secure-exception
+POST {{JournalChallenge.Presentation_HostAddress}}/api.user.tree.node.create?treeName=TestTree&nodeName=Child1&parentNodeId=1
+Accept: application/json
+
+###
+
+POST {{JournalChallenge.Presentation_HostAddress}}/api.user.tree.node.rename?nodeId=2&newNodeName=RenamedChild
+Accept: application/json
+
+###
+
+POST {{JournalChallenge.Presentation_HostAddress}}/api.user.tree.node.delete?nodeId=2&isForcedDeletion=false
+Accept: application/json
+
+###
+
+POST {{JournalChallenge.Presentation_HostAddress}}/api.user.tree.node.delete?nodeId=2&isForcedDeletion=true
 Accept: application/json
 
 ###
