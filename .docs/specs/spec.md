@@ -125,3 +125,10 @@ The REST API structure must replicate the provided Swagger definition as closely
 - **Database:** PostgreSQL
 - **ORM:** Entity Framework Core (Code-First)
 - **Architecture:** Clean Architecture.
+
+## 6. Architectural Conventions
+
+### 6.1 Feature-per-Folder Organization
+The project strictly follows a **Feature-per-Folder** structure to ensure high cohesion and maintainability:
+- **Application Layer**: Queries, Commands, their respective Handlers, and associated Validators must be co-located within a single folder named after the specific feature (e.g., `Journal/GetTree/`).
+- **Test Layer**: Unit and validation tests must mirror this organizational structure, ensuring that tests for a specific feature are grouped together in a corresponding directory (e.g., `Journal/GetTree/GetTreeQueryValidationTests.cs`).
