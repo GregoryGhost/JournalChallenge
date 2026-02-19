@@ -1,7 +1,7 @@
 # Core Specification
 
 ## 1. Overview
-Create an ASP.NET Core 8 REST API application. No UI is required. The application must use a Code-First approach with one of the following databases: **PostgreSQL (Preferred)**, MS SQL, or MySQL.
+Create an ASP.NET Core 8 REST API application. No UI is required. The application must use a Code-First approach with one of the following databases: **PostgreSQL (Preferred)**, MS SQL, or MySQL. [See the architecture-spec for more technical details.](architecture-spec.md)
 
 ## 2. Database Design
 
@@ -120,15 +120,4 @@ The REST API structure must replicate the provided Swagger definition as closely
 | :--- | :--- | :--- | :--- |
 | **POST** | `/api.user.partner.rememberMe` | Saves user by unique code and returns auth token. | **Query:** `code` (string, required) |
 
-## 5. Technical Constraints
-- **Framework:** ASP.NET Core 8
-- **Database:** PostgreSQL
-- **ORM:** Entity Framework Core (Code-First)
-- **Architecture:** Clean Architecture.
 
-## 6. Architectural Conventions
-
-### 6.1 Feature-per-Folder Organization
-The project strictly follows a **Feature-per-Folder** structure to ensure high cohesion and maintainability:
-- **Application Layer**: Queries, Commands, their respective Handlers, and associated Validators must be co-located within a single folder named after the specific feature (e.g., `Journal/GetTree/`).
-- **Test Layer**: Unit and validation tests must mirror this organizational structure, ensuring that tests for a specific feature are grouped together in a corresponding directory (e.g., `Journal/GetTree/GetTreeQueryValidationTests.cs`).
