@@ -1,4 +1,4 @@
-namespace JournalChallenge.Application.Journal;
+namespace JournalChallenge.Application.Journal.GetTree;
 
 using CSharpFunctionalExtensions;
 
@@ -9,8 +9,10 @@ using JournalChallenge.Domain.Journal;
 
 using Microsoft.EntityFrameworkCore;
 
+public interface IGetTreeQueryHandler : IQueryHandler<GetTreeQuery, NodeDto>;
+
 internal sealed class GetTreeQueryHandler(IApplicationDbContext context)
-    : IQueryHandler<GetTreeQuery, NodeDto>
+    : IGetTreeQueryHandler
 {
     public async Task<Result<NodeDto, IError<DomainError>>> HandleAsync(
         GetTreeQuery query,

@@ -1,4 +1,4 @@
-namespace JournalChallenge.Application.Journal;
+namespace JournalChallenge.Application.Journal.RenameNode;
 
 using CSharpFunctionalExtensions;
 
@@ -8,8 +8,10 @@ using JournalChallenge.Application.Core.Abstractions.Messaging;
 
 using Microsoft.EntityFrameworkCore;
 
+public interface IRenameNodeCommandHandler : ICommandHandler<RenameNodeCommand>;
+
 internal sealed class RenameNodeCommandHandler(IApplicationDbContext context)
-    : ICommandHandler<RenameNodeCommand>
+    : IRenameNodeCommandHandler
 {
     public async Task<UnitResult<IError<DomainError>>> HandleAsync(
         RenameNodeCommand command,

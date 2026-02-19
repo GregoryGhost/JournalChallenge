@@ -1,4 +1,4 @@
-namespace JournalChallenge.Application.Journal;
+namespace JournalChallenge.Application.Journal.DeleteNode;
 
 using CSharpFunctionalExtensions;
 
@@ -9,8 +9,10 @@ using JournalChallenge.Domain.Journal;
 
 using Microsoft.EntityFrameworkCore;
 
+public interface IDeleteNodeCommandHandler : ICommandHandler<DeleteNodeCommand>;
+
 internal sealed class DeleteNodeCommandHandler(IApplicationDbContext context)
-    : ICommandHandler<DeleteNodeCommand>
+    : IDeleteNodeCommandHandler
 {
     public async Task<UnitResult<IError<DomainError>>> HandleAsync(
         DeleteNodeCommand command,

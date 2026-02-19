@@ -1,4 +1,4 @@
-namespace JournalChallenge.Application.Journal;
+namespace JournalChallenge.Application.Journal.DeleteNode;
 
 using JournalChallenge.Application.Core.Abstractions.Messaging;
 

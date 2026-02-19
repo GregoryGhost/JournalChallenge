@@ -1,4 +1,4 @@
-namespace JournalChallenge.Application.Journal;
+namespace JournalChallenge.Application.Journal.CreateNode;
 
 using CSharpFunctionalExtensions;
 
@@ -9,8 +9,10 @@ using JournalChallenge.Domain.Journal;
 
 using Microsoft.EntityFrameworkCore;
 
+public interface ICreateNodeCommandHandler : ICommandHandler<CreateNodeCommand>;
+
 internal sealed class CreateNodeCommandHandler(IApplicationDbContext context)
-    : ICommandHandler<CreateNodeCommand>
+    : ICreateNodeCommandHandler
 {
     public async Task<UnitResult<IError<DomainError>>> HandleAsync(
         CreateNodeCommand command,

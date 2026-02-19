@@ -4,6 +4,9 @@ using FluentAssertions;
 
 using JournalChallenge.Application.Journal;
 using JournalChallenge.Application.Core.Abstractions.ErrorHandling;
+using JournalChallenge.Application.Journal.CreateNode;
+using JournalChallenge.Application.Journal.DeleteNode;
+using JournalChallenge.Application.Journal.GetTree;
 using JournalChallenge.Domain.Journal;
 using JournalChallenge.Infrastructure.Database;
 using JournalChallenge.Tests.Core.Abstractions;
