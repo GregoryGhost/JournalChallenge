@@ -26,5 +26,12 @@ public class ExceptionJournalConfiguration : IEntityTypeConfiguration<ExceptionJ
         builder.Property(e => e.StackTrace)
                .IsRequired()
                .HasColumnType("text");
+        
+        builder.Property(e => e.ExceptionType)
+               .IsRequired()
+               .HasMaxLength(255);
+        
+        builder.Property(e => e.Message)
+               .IsRequired();
     }
 }
