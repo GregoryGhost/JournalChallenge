@@ -7,12 +7,19 @@
       - POSTGRES_PASSWORD=postgres
     ports:
       - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
   journalchallenge.presentation:
     image: journalchallenge.presentation
     build:
       context: .
       dockerfile: JournalChallenge.Presentation/Dockerfile
+    ports:
+      - "5000:8080"
     environment:
       - DB_CONNECTION_STRING=Host=db;Database=journaldb;Username=postgres;Password=postgres
     depends_on:
       - db
+
+volumes:
+  db_data:
