@@ -23,6 +23,12 @@ public class NodeConfiguration : IEntityTypeConfiguration<Node>
                .HasForeignKey(n => n.ParentId)
                .OnDelete(DeleteBehavior.Restrict);
         
-        builder.HasIndex(n => n.TreeId);
+        builder.HasIndex(n => new { n.TreeId, n.ParentId, n.Name })
+               .IsUnique();
+
+        builder.HasOne(n => n.Tree)
+               .WithMany(t => t.Nodes)
+               .HasForeignKey(n => n.TreeId)
+               .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -2,15 +2,17 @@
 
 public class Node
 {
-    public int Id { get; set; }
+    public long Id { get; set; }
 
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
-    public int? ParentId { get; set; }
+    public long? ParentId { get; set; }
     
     public virtual Node? Parent { get; set; }
 
     public virtual ICollection<Node> Children { get; set; } = new List<Node>();
     
-    public int TreeId { get; set; }
+    public long TreeId { get; set; }
+    
+    public virtual Tree Tree { get; set; } = null!;
 }

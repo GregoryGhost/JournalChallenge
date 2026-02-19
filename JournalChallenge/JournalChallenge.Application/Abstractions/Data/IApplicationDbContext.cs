@@ -10,4 +10,6 @@ public interface IApplicationDbContext : IDbContext
     DbSet<ExceptionJournal> ExceptionJournals { get; set; }
 
     DbSet<Node> Nodes { get; set; }
+    
+    DbSet<Tree> Trees { get; set; }
 }
