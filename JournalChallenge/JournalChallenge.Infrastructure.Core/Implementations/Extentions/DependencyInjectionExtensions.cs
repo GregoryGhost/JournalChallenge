@@ -12,7 +12,13 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationBasement(this IServiceCollection services)
     {
-        services.Scan(scan => scan.FromAssembliesOf(typeof(DependencyInjection))
+        var assemblies = new[]
+        {
+            typeof(DependencyInjection).Assembly,
+            typeof(JournalChallenge.Application.ApplicationAbstraction).Assembly
+        };
+
+        services.Scan(scan => scan.FromAssemblies(assemblies)
                                   .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandler<,>)), publicOnly: false)
                                   .AsImplementedInterfaces()
                                   .WithScopedLifetime()
@@ -23,14 +29,16 @@ public static class DependencyInjection
                                   .AsImplementedInterfaces()
                                   .WithScopedLifetime());
 
-        services.Decorate(typeof(ICommandHandler<,>), typeof(ValidationDecorator.CommandHandler<,>));
-        services.Decorate(typeof(ICommandHandler<>), typeof(ValidationDecorator.CommandBaseHandler<>));
+        services.TryDecorate(typeof(ICommandHandler<,>), typeof(ValidationDecorator.CommandHandler<,>));
+        services.TryDecorate(typeof(ICommandHandler<>), typeof(ValidationDecorator.CommandBaseHandler<>));
 
-        services.Decorate(typeof(IQueryHandler<,>), typeof(LoggingDecorator.QueryHandler<,>));
-        services.Decorate(typeof(ICommandHandler<,>), typeof(LoggingDecorator.CommandHandler<,>));
-        services.Decorate(typeof(ICommandHandler<>), typeof(LoggingDecorator.CommandBaseHandler<>));
+        services.TryDecorate(typeof(IQueryHandler<,>), typeof(LoggingDecorator.QueryHandler<,>));
+        services.TryDecorate(typeof(ICommandHandler<,>), typeof(LoggingDecorator.CommandHandler<,>));
+        services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingDecorator.CommandBaseHandler<>));
         
-        services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly, includeInternalTypes: true);
+        services.AddValidatorsFromAssembly(typeof(JournalChallenge.Application.ApplicationAbstraction).Assembly, includeInternalTypes: true);
+
+        services.AddScoped<IRestCustomResultsHandler, CustomResultsHandler>();
 
         return services;
     }

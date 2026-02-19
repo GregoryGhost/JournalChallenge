@@ -4,3 +4,24 @@ GET {{JournalChallenge.Presentation_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{JournalChallenge.Presentation_HostAddress}}/api.test/exception
+Accept: application/json
+
+###
+
+GET {{JournalChallenge.Presentation_HostAddress}}/api.test/secure-exception
+Accept: application/json
+
+###
+
+POST {{JournalChallenge.Presentation_HostAddress}}/api.user.journal.getRange?skip=0&take=10
+Content-Type: application/json
+
+{}
+
+###
+
+POST {{JournalChallenge.Presentation_HostAddress}}/api.user.journal.getSingle?id=1
+Accept: application/json
+

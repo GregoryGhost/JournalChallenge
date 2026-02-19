@@ -1,5 +1,6 @@
 ﻿namespace JournalChallenge.Infrastructure;
 
+using JournalChallenge.Application.Abstractions.Data;
 using JournalChallenge.Infrastructure.Core.Implementations.Extentions;
 using JournalChallenge.Infrastructure.Database;
 
@@ -15,6 +16,7 @@ public static class DependencyInjection
         return services
                .AddServices()
                .AddDbContextWithEnvDbConnectionString<AppDbContext>(configuration)
+               .AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<AppDbContext>())
                .AddHealthChecks(configuration)
                .AddApplicationBasement();;
     }

@@ -8,7 +8,7 @@
 
     <ItemGroup>
         <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="8.0.2" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.24" />
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
         <PackageReference Include="morelinq" Version="4.4.0" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
@@ -19,6 +19,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\JournalChallenge.Application.Core\JournalChallenge.Application.Core.csproj" />
+      <ProjectReference Include="..\JournalChallenge.Domain\JournalChallenge.Domain.csproj" />
+      <ProjectReference Include="..\JournalChallenge.Application\JournalChallenge.Application.csproj" />
     </ItemGroup>
 
 </Project>
