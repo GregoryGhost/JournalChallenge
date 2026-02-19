@@ -1,6 +1,18 @@
 ﻿services:
+  db:
+    image: postgres:18.2-alpine3.23
+    environment:
+      - POSTGRES_DB=journaldb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
   journalchallenge.presentation:
     image: journalchallenge.presentation
     build:
       context: .
       dockerfile: JournalChallenge.Presentation/Dockerfile
+    environment:
+      - DB_CONNECTION_STRING=Host=db;Database=journaldb;Username=postgres;Password=postgres
+    depends_on:
+      - db

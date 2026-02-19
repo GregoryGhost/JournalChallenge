@@ -18,4 +18,10 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\JournalChallenge.Application\JournalChallenge.Application.csproj" />
+      <ProjectReference Include="..\JournalChallenge.Domain\JournalChallenge.Domain.csproj" />
+      <ProjectReference Include="..\JournalChallenge.Infrastructure\JournalChallenge.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
