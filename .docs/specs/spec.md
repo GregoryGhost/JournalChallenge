@@ -84,9 +84,19 @@ The REST API structure must replicate the provided Swagger definition as closely
 | Method | Endpoint | Description | Parameters (Query) |
 | :--- | :--- | :--- | :--- |
 | **POST** | `/api.user.tree.get` | Returns entire tree. Creates it automatically if it doesn't exist. | `treeName` (string, required) |
-| **POST** | `/api.user.tree.node.create` | Create a new node. Parent ID is optional (for root nodes). Name must be unique among siblings. | `treeName` (string, required)<br>`parentNodeId` (int64, optional)<br>`nodeName` (string, required) |
-| **POST** | `/api.user.tree.node.delete` | Delete an existing node and **all its descendants**. | `nodeId` (int64, required) |
+| **POST** | `/api.user.tree.node.create` | Create a new node. If the tree doesn't exist, it will be created automatically. Parent ID is optional; if omitted, the node becomes the tree's single root. [See more for the creation rules](#411-node-creation-rules) | `treeName` (string, required)<br>`parentNodeId` (int64, optional)<br>`nodeName` (string, required) |
+| **POST** | `/api.user.tree.node.delete` | Delete an existing node. If the node has descendants, it will only be deleted (along with all its descendants) if `isForcedDeletion` is true. [See more for the deletion rules](#412-node-deletion-rules) | `nodeId` (int64, required)<br>`isForcedDeletion` (boolean, optional) |
 | **POST** | `/api.user.tree.node.rename` | Rename an existing node. New name must be unique among siblings. | `nodeId` (int64, required)<br>`newNodeName` (string, required) |
+
+#### 4.1.1 Node creation rules
+- **Auto-Creation**: If `treeName` is not found, a new tree is created automatically.
+- **Single Root Constraint**: Each tree can have only **one** root node (where `ParentId` is null). If a second root node is attempted for the same tree, throw a `SecureException` with an appropriate message.
+- **Sibling Uniqueness**: Node names must be unique among siblings within the same tree.
+
+#### 4.1.2 Node deletion rules
+- If a node has children and `isForcedDeletion` is **false** or **missing**: Throw a `SecureException` with the message: `"You have to delete all children nodes first"`.
+- If a node has children and `isForcedDeletion` is **true**: Delete the node and all its descendants recursively.
+- If a node has no children: Delete the node normally.
 
 ### 4.2 Journal (`user.journal`)
 
