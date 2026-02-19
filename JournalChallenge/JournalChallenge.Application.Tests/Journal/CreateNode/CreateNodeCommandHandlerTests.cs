@@ -21,7 +21,7 @@ public sealed class CreateNodeCommandHandlerTests : BaseDbTest<AppDbContext>
     }
 
     [Test]
-    public async Task ShouldFail_WhenAddingSecondRoot()
+    public async Task TestAddingSecondRootShouldBeFailure()
     {
         // Arrange
         var tree = new Tree { Name = "Tree1" };
@@ -43,7 +43,7 @@ public sealed class CreateNodeCommandHandlerTests : BaseDbTest<AppDbContext>
     }
 
     [Test]
-    public async Task ShouldFail_WhenNameExistsAmongSiblings()
+    public async Task TestNameExistsAmongSiblingsShouldBeFailure()
     {
         // Arrange
         var tree = new Tree { Name = "Tree1" };

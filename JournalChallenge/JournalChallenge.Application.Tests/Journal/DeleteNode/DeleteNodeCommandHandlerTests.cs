@@ -20,7 +20,7 @@ public sealed class DeleteNodeCommandHandlerTests : BaseDbTest<AppDbContext>
     }
 
     [Test]
-    public async Task HandleAsync_ShouldFail_WhenHasChildrenAndNotForced()
+    public async Task TestHasChildrenAndNotForcedShouldBeFailure()
     {
         // Arrange
         var tree = new Tree { Name = "Tree1" };
@@ -43,7 +43,7 @@ public sealed class DeleteNodeCommandHandlerTests : BaseDbTest<AppDbContext>
     }
 
     [Test]
-    public async Task HandleAsync_ShouldSucceed_WhenForcedDeletionIsTrue()
+    public async Task TestForcedDeletionIsTrueShouldBeSuccess()
     {
         // Arrange
         var tree = new Tree { Name = "Tree1" };

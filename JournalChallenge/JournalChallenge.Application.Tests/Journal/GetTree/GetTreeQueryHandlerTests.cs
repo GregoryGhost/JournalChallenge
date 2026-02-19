@@ -21,7 +21,7 @@ public sealed class GetTreeQueryHandlerTests : BaseDbTest<AppDbContext>
     }
 
     [Test]
-    public async Task HandleAsync_ShouldCreateTreeAndRootNode_WhenTreeDoesNotExist()
+    public async Task TestTreeDoesNotExistShouldCreateTreeAndRootNode()
     {
         // Arrange
         var handler = new GetTreeQueryHandler(DbContext);

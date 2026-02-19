@@ -17,12 +17,13 @@ Implemented `AbstractValidator<T>` for each handler in its respective feature fo
 - [x] **`DeleteNodeCommandValidator`**: `NodeId > 0`.
 
 ## 3. Unit Testing (Validation & Handler Tests) [COMPLETED]
-Reorganized tests to follow the **Feature-per-Folder** structure, co-locating business logic and validation tests.
+Reorganized tests to follow the **Feature-per-Folder** structure and aligned method names with the `architecture-spec.md` naming conventions.
 
 - [x] **`Journal/GetTree/`**: `GetTreeQueryHandlerTests.cs` and `GetTreeQueryValidationTests.cs`.
 - [x] **`Journal/CreateNode/`**: `CreateNodeCommandHandlerTests.cs` and `CreateNodeCommandValidationTests.cs`.
 - [x] **`Journal/RenameNode/`**: `RenameNodeCommandHandlerTests.cs` and `RenameNodeCommandValidationTests.cs`.
 - [x] **`Journal/DeleteNode/`**: `DeleteNodeCommandHandlerTests.cs` and `DeleteNodeCommandValidationTests.cs`.
+- [x] **Naming Convention**: Handler tests use `Test<Scenario>Should<Expectation>`; Validator tests use `Should<Outcome>When<Condition>`.
 - [x] **Cleanup**: Removed monolithic `JournalTests.cs`.
 
 ## 4. Verification [COMPLETED]

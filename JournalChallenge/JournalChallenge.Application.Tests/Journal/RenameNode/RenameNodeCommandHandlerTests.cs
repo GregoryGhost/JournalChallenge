@@ -21,7 +21,7 @@ public sealed class RenameNodeCommandHandlerTests : BaseDbTest<AppDbContext>
     }
 
     [Test]
-    public async Task HandleAsync_ShouldSucceed_WhenValid()
+    public async Task TestValidRenameShouldBeSuccess()
     {
         // Arrange
         var tree = new Tree { Name = "Tree1" };
@@ -44,7 +44,7 @@ public sealed class RenameNodeCommandHandlerTests : BaseDbTest<AppDbContext>
     }
 
     [Test]
-    public async Task HandleAsync_ShouldFail_WhenNameExistsAmongSiblings()
+    public async Task TestNameExistsAmongSiblingsShouldBeFailure()
     {
         // Arrange
         var tree = new Tree { Name = "Tree1" };
