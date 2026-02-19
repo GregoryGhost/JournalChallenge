@@ -19,6 +19,8 @@ internal sealed class CustomResultsHandler : IRestCustomResultsHandler
     {
         return error.Error.Type switch {
             ErrorType.Secure => new SecureException(error.Error.Message),
+            ErrorType.Validation => new ValidationException(error.Error.Message, new Dictionary<string, string[]> { { "General", new[] { error.Error.Message } } }),
+            ErrorType.NotFound => new KeyNotFoundException(error.Error.Message),
             _ => new Exception(error.Error.Message)
         };
     }

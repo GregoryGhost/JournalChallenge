@@ -67,11 +67,11 @@ public class ExceptionMiddleware(RequestDelegate next, IServiceScopeFactory scop
 
         // Response Formatting
         context.Response.ContentType = "application/json";
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-
+        
         object response;
         if (exception is SecureException secureEx)
         {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             response = new
             {
                 type = "Secure",
@@ -79,8 +79,33 @@ public class ExceptionMiddleware(RequestDelegate next, IServiceScopeFactory scop
                 data = new { message = secureEx.Message }
             };
         }
+        else if (exception is ValidationException validationEx)
+        {
+            context.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+            response = new
+            {
+                type = "Validation",
+                id = eventId.ToString(),
+                data = new 
+                { 
+                    message = validationEx.Message,
+                    errors = validationEx.Errors
+                }
+            };
+        }
+        else if (exception is KeyNotFoundException notFoundEx)
+        {
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+            response = new
+            {
+                type = "NotFound",
+                id = eventId.ToString(),
+                data = new { message = notFoundEx.Message }
+            };
+        }
         else
         {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             response = new
             {
                 type = "Exception",
