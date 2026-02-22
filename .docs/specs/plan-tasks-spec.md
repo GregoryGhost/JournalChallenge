@@ -26,7 +26,16 @@ Detailed, actionable steps broken down by component or layer (e.g., Domain, Appl
 ### Verification
 A list of specific steps to verify the implementation, including unit tests, integration tests, and manual validation steps.
 
-## 3. Execution Phase
+## 3. Subtask Management (Optional)
+For complex tasks, subtasks may be managed in a dedicated `subtasks/` directory within the task folder. This phase is optional and should be used only when the task's complexity warrants more granular tracking.
+
+1.  **Directory Creation**: Create a `subtasks/` folder in the task directory.
+2.  **Subtask Index**: Create an `index.md` file in the `subtasks/` folder to list all subtasks and their status.
+3.  **Detailed Subtasks**: Create individual markdown files (e.g., `stt-001.md`, `stt-002.md`) for each subtask, detailing objectives, actions, and verification.
+
+Example: See `.docs/tasks/task-infra-exception-journal/subtasks/` for a reference implementation.
+
+## 4. Execution Phase
 - **Iterative Workflow**: Work through subtasks sequentially.
 - **Updating the Plan**: As subtasks are completed, update the `implementation-plan.md` by checking off boxes and adding `[DONE]` to section titles.
 - **Course Correction**: If the implementation strategy changes during the task, update the plan to reflect the new direction.
