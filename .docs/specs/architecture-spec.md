@@ -19,3 +19,14 @@ The project strictly follows a **Feature-per-Folder** structure to ensure high c
 - **Microsoft.EntityFrameworkCore.InMemory 8.0.24** (For in-memory database testing)
 - **Test Naming Convention for handlers**: Use `Test<Scenario>Should<Expectation>` (e.g., `TestLoginUserShouldBeSuccess`) for test method names to keep expectations explicit and consistent.
 - **Test Naming Convention for validators**: Follow the `Should<Outcome>When<Condition>` style used in `LoginUserValidationTests` (e.g., `ShouldHaveErrorWhenNameIsEmpty`, `ShouldNotHaveErrorWhenPasswordIsValid`) to keep validation intent readable.
+
+## 4. Infrastructure & Reliability
+
+### 4.1 Health Checks
+- The application MUST expose a standard health check endpoint at `/health`.
+- The health check MUST verify connectivity to the primary database (PostgreSQL).
+- This endpoint SHOULD be used by Docker Compose for service orchestration.
+
+### 4.2 Docker Standards
+- **Image Pinning**: All images in `compose.yaml` or `docker.testing.yaml` MUST be pinned to specific, immutable versions (e.g., `postgres:15-alpine`). The use of the `latest` tag is PROHIBITED to ensure environment reproducibility.
+- **Resource Limits**: (Optional but recommended) Define CPU and memory limits for containers.
