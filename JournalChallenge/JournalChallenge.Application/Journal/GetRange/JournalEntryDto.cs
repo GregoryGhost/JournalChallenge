@@ -3,7 +3,7 @@ namespace JournalChallenge.Application.Journal.GetRange;
 public sealed class JournalEntryDto
 {
     public long Id { get; init; }
-    public long EventId { get; init; }
+    public string EventId { get; init; } = null!;
     public DateTime CreatedAt { get; init; }
 }
 

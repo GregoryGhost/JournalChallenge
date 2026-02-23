@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="JournalChallenge Integration Tests" tests="11" time="1.179">
+  <testsuite name="stt-001: Tree &amp; Node Lifecycle / Get/Create Tree" id="3abc0f02-b765-4077-b8f9-29b7494ff485" timestamp="2026-02-23T14:13:56.658Z" tests="2" failures="0" errors="0" time="0.781">
+    <testcase name="Status code is 200" time="0.781" classname="JournalChallengeIntegrationTests"/>
+    <testcase name="Tree has a name" time="0.781" classname="JournalChallengeIntegrationTests"/>
+  </testsuite>
+  <testsuite name="stt-001: Tree &amp; Node Lifecycle / Create Root Node (if empty)" id="6389e98d-f27c-4f69-8a09-9513321f54e5" timestamp="2026-02-23T14:13:56.658Z" tests="1" failures="0" errors="0" time="0.117">
+    <testcase name="Successful root creation or already exists" time="0.117" classname="JournalChallengeIntegrationTests"/>
+  </testsuite>
+  <testsuite name="stt-001: Tree &amp; Node Lifecycle / Create Child Node" id="d9ed3d04-e0f1-480c-ae95-cb131b34736b" timestamp="2026-02-23T14:13:56.658Z" tests="1" failures="0" errors="0" time="0.031">
+    <testcase name="Status code is 200" time="0.031" classname="JournalChallengeIntegrationTests"/>
+  </testsuite>
+  <testsuite name="stt-001: Tree &amp; Node Lifecycle / Rename Child Node" id="8e288a54-f9dc-4928-ad31-dd6590ef0798" timestamp="2026-02-23T14:13:56.658Z" tests="1" failures="0" errors="0" time="0.034">
+    <testcase name="Status code is 200" time="0.034" classname="JournalChallengeIntegrationTests"/>
+  </testsuite>
+  <testsuite name="stt-002: Business Constraint Enforcement / Root Constraint (Duplicate Root)" id="db5c3e4d-3e62-4689-8bf1-d29b0a6b0c88" timestamp="2026-02-23T14:13:56.658Z" tests="2" failures="0" errors="0" time="0.018">
+    <testcase name="Status code is 500" time="0.018" classname="JournalChallengeIntegrationTests"/>
+    <testcase name="Is SecureException" time="0.018" classname="JournalChallengeIntegrationTests"/>
+  </testsuite>
+  <testsuite name="stt-002: Business Constraint Enforcement / Sibling Uniqueness" id="b2b73a12-6b90-491e-97fe-900fc70a088b" timestamp="2026-02-23T14:13:56.658Z" tests="2" failures="0" errors="0" time="0.017">
+    <testcase name="Status code is 500" time="0.017" classname="JournalChallengeIntegrationTests"/>
+    <testcase name="Is SecureException" time="0.017" classname="JournalChallengeIntegrationTests"/>
+  </testsuite>
+  <testsuite name="stt-003: Recursive &amp; Bulk Operations / Delete Node (Safe - Should Fail)" id="e83cfc0e-d081-49b3-b6c8-6d38f2078906" timestamp="2026-02-23T14:13:56.658Z" tests="2" failures="0" errors="0" time="0.063">
+    <testcase name="Status code is 500" time="0.063" classname="JournalChallengeIntegrationTests"/>
+    <testcase name="Error message matches safe deletion" time="0.063" classname="JournalChallengeIntegrationTests"/>
+  </testsuite>
+  <testsuite name="stt-003: Recursive &amp; Bulk Operations / Delete Node (Forced)" id="be3f8f91-0b40-4ee5-985d-8c318e76f6b9" timestamp="2026-02-23T14:13:56.658Z" tests="1" failures="0" errors="0" time="0.036">
+    <testcase name="Status code is 200" time="0.036" classname="JournalChallengeIntegrationTests"/>
+  </testsuite>
+  <testsuite name="stt-003: Recursive &amp; Bulk Operations / Verify Empty Tree" id="ea05f77e-29c5-438f-a538-d2aae6899df5" timestamp="2026-02-23T14:13:56.658Z" tests="2" failures="0" errors="0" time="0.017">
+    <testcase name="Status code is 200" time="0.017" classname="JournalChallengeIntegrationTests"/>
+    <testcase name="Tree has no children" time="0.017" classname="JournalChallengeIntegrationTests"/>
+  </testsuite>
+  <testsuite name="stt-004: Exception Journaling / Get Single Journal Entry" id="435f68ab-d4d5-45f8-8d20-a0b31ba1250a" timestamp="2026-02-23T14:13:56.658Z" tests="2" failures="0" errors="0" time="0.023">
+    <testcase name="Status code is 200" time="0.023" classname="JournalChallengeIntegrationTests"/>
+    <testcase name="Journal entry matches original error" time="0.023" classname="JournalChallengeIntegrationTests"/>
+  </testsuite>
+  <testsuite name="stt-004: Exception Journaling / Get Journal Range" id="39dd209a-3be9-43f5-988b-80a5b70a9829" timestamp="2026-02-23T14:13:56.658Z" tests="2" failures="0" errors="0" time="0.042">
+    <testcase name="Status code is 200" time="0.042" classname="JournalChallengeIntegrationTests"/>
+    <testcase name="Returns items" time="0.042" classname="JournalChallengeIntegrationTests"/>
+  </testsuite>
+</testsuites>

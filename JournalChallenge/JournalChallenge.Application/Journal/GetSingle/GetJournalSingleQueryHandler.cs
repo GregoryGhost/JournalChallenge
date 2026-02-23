@@ -18,7 +18,7 @@ internal sealed class GetJournalSingleQueryHandler(IApplicationDbContext context
         CancellationToken cancellationToken)
     {
         var entry = await context.ExceptionJournals
-                                 .FirstOrDefaultAsync(x => x.Id == query.Id, cancellationToken);
+                                 .FirstOrDefaultAsync(x => x.EventId == query.Id, cancellationToken);
 
         if (entry == null)
         {
@@ -28,7 +28,7 @@ internal sealed class GetJournalSingleQueryHandler(IApplicationDbContext context
         return new JournalDetailDto
         {
             Id = entry.Id,
-            EventId = entry.EventId,
+            EventId = entry.EventId.ToString(),
             CreatedAt = entry.Timestamp,
             Text = $"Message: {entry.Message}\nStack Trace: {entry.StackTrace}"
         };

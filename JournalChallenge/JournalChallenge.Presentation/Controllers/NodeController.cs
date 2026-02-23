@@ -26,7 +26,7 @@ public class NodeController(
 
         if (result.IsSuccess)
         {
-            return Ok();
+            return Ok(new { id = result.Value });
         }
 
         throw resultsHandler.MatchProblem(result.Error);

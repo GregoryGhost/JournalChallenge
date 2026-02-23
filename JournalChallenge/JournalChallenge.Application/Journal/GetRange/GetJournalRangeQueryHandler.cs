@@ -47,7 +47,7 @@ internal sealed class GetJournalRangeQueryHandler(IApplicationDbContext context)
                           .Select(x => new JournalEntryDto
                           {
                               Id = x.Id,
-                              EventId = x.EventId,
+                              EventId = x.EventId.ToString(),
                               CreatedAt = x.Timestamp
                           })
                           .ToListAsync(cancellationToken);

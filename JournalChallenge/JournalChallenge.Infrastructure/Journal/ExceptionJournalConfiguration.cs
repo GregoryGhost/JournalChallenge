@@ -16,6 +16,7 @@ public class ExceptionJournalConfiguration : IEntityTypeConfiguration<ExceptionJ
 
         builder.Property(e => e.EventId)
                .IsRequired();
+        builder.HasIndex(e => e.EventId).IsUnique();
 
         builder.Property(e => e.Timestamp)
                .IsRequired();

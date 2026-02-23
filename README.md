@@ -11,6 +11,31 @@ docker compose up --build
 
 The API will be available at `http://localhost:5000`.
 
+## How to run integration tests
+The project uses a containerized **Postman/Newman** test suite to verify business rules, recursive operations, and the exception journaling system.
+
+### Option 1: Using PowerShell (Recommended)
+From the root directory or `JournalChallenge/` directory, run the automated script:
+
+```powershell
+.\JournalChallenge\run-integration-tests.ps1
+```
+
+This script handles the full lifecycle: environment cleanup, infrastructure startup (DB/Migrate/API), health checks, test execution, and final teardown.
+
+### Option 2: Using Docker Compose Manual Command
+Run the following command in the `JournalChallenge/` directory:
+
+```bash
+docker compose -f docker.testing.yaml up --build --exit-code-from newman
+```
+
+This command will:
+1.  Spin up the API and PostgreSQL containers with pinned versions.
+2.  Wait for the `/health` endpoint to be ready.
+3.  Execute the Postman collections using Newman.
+4.  Automatically stop all containers and return the test exit code.
+
 ### Swagger UI
 After the application is running, you can access the Swagger UI for API documentation and testing at:
 [http://localhost:5000/swagger/index.html](http://localhost:5000/swagger/index.html)

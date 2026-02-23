@@ -9,12 +9,12 @@ using JournalChallenge.Domain.Journal;
 
 using Microsoft.EntityFrameworkCore;
 
-public interface ICreateNodeCommandHandler : ICommandHandler<CreateNodeCommand>;
+public interface ICreateNodeCommandHandler : ICommandHandler<CreateNodeCommand, long>;
 
 internal sealed class CreateNodeCommandHandler(IApplicationDbContext context)
     : ICreateNodeCommandHandler
 {
-    public async Task<UnitResult<IError<DomainError>>> HandleAsync(
+    public async Task<Result<long, IError<DomainError>>> HandleAsync(
         CreateNodeCommand command,
         CancellationToken cancellationToken)
     {
@@ -37,7 +37,7 @@ internal sealed class CreateNodeCommandHandler(IApplicationDbContext context)
 
             if (hasRoot)
             {
-                return UnitResult.Failure(DomainError.Secure("A tree cannot have more than one root node"));
+                return Result.Failure<long, IError<DomainError>>(DomainError.Secure("A tree cannot have more than one root node"));
             }
         }
         else
@@ -49,7 +49,7 @@ internal sealed class CreateNodeCommandHandler(IApplicationDbContext context)
 
             if (parent == null)
             {
-                return UnitResult.Failure(DomainError.NotFound("Parent node not found in this tree."));
+                return Result.Failure<long, IError<DomainError>>(DomainError.NotFound("Parent node not found in this tree."));
             }
         }
 
@@ -60,7 +60,7 @@ internal sealed class CreateNodeCommandHandler(IApplicationDbContext context)
 
         if (isDuplicate)
         {
-            return UnitResult.Failure(DomainError.Secure("A node with this name already exists among siblings."));
+            return Result.Failure<long, IError<DomainError>>(DomainError.Secure("A node with this name already exists among siblings."));
         }
 
         var newNode = new Node
@@ -73,6 +73,6 @@ internal sealed class CreateNodeCommandHandler(IApplicationDbContext context)
         context.Nodes.Add(newNode);
         await context.SaveChangesAsync(cancellationToken);
 
-        return UnitResult.Success<IError<DomainError>>();
+        return Result.Success<long, IError<DomainError>>(newNode.Id);
     }
 }

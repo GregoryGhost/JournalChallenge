@@ -1,0 +1,55 @@
+services:
+  db:
+    image: postgres:18.2-alpine3.23
+    restart: always
+    environment:
+      - POSTGRES_DB=journaldb_test
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d journaldb_test"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    image: journalchallenge.api.test
+    environment:
+      - DB_CONNECTION_STRING=Host=db;Database=journaldb_test;Username=postgres;Password=postgres
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: ["./efbundle", "--connection", "Host=db;Database=journaldb_test;Username=postgres;Password=postgres"]
+
+  api:
+    image: journalchallenge.api.test
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - DB_CONNECTION_STRING=Host=db;Database=journaldb_test;Username=postgres;Password=postgres
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fL http://localhost:8080/health || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+      start_period: 15s
+
+  newman:
+    image: postman/newman:6.1.3-alpine
+    volumes:
+      - ./tests:/etc/newman
+    depends_on:
+      api:
+        condition: service_healthy
+    command:
+      run /etc/newman/JournalChallenge.postman_collection.json
+      --environment /etc/newman/Localhost.postman_environment.json
+      --reporters cli,junit
+      --reporter-junit-export /etc/newman/results.xml

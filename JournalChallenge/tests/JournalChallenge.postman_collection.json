@@ -1,0 +1,488 @@
+{
+	"info": {
+		"_postman_id": "8c4d334e-7b7e-4b4e-9b9e-9b9e9b9e9b9e",
+		"name": "JournalChallenge Integration Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "stt-001: Tree & Node Lifecycle",
+			"item": [
+				{
+					"name": "Get/Create Tree",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.environment.set(\"rootNodeId\", jsonData.id);",
+									"}",
+									"pm.test(\"Tree has a name\", function () {",
+									"    pm.expect(jsonData.name).to.eql(pm.environment.get(\"treeName\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"url": {
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api.user.tree.get"
+							],
+							"query": [
+								{
+									"key": "treeName",
+									"value": "{{treeName}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Root Node (if empty)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const jsonData = pm.response.json();",
+									"    pm.environment.set(\"rootNodeId\", jsonData.id);",
+									"}",
+									"pm.test(\"Successful root creation or already exists\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 500]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"url": {
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api.user.tree.node.create"
+							],
+							"query": [
+								{
+									"key": "treeName",
+									"value": "{{treeName}}"
+								},
+								{
+									"key": "nodeName",
+									"value": "RootNode"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Child Node",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const jsonData = pm.response.json();",
+									"pm.environment.set(\"childNodeId\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"url": {
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api.user.tree.node.create"
+							],
+							"query": [
+								{
+									"key": "treeName",
+									"value": "{{treeName}}"
+								},
+								{
+									"key": "parentNodeId",
+									"value": "{{rootNodeId}}"
+								},
+								{
+									"key": "nodeName",
+									"value": "ChildNode"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rename Child Node",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"url": {
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api.user.tree.node.rename"
+							],
+							"query": [
+								{
+									"key": "nodeId",
+									"value": "{{childNodeId}}"
+								},
+								{
+									"key": "newNodeName",
+									"value": "RenamedChild"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "stt-002: Business Constraint Enforcement",
+			"item": [
+				{
+					"name": "Root Constraint (Duplicate Root)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"const jsonData = pm.response.json();",
+									"pm.test(\"Is SecureException\", function () {",
+									"    pm.expect(jsonData.type).to.eql(\"Secure\");",
+									"});",
+									"pm.environment.set(\"lastErrorEventId\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"url": {
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api.user.tree.node.create"
+							],
+							"query": [
+								{
+									"key": "treeName",
+									"value": "{{treeName}}"
+								},
+								{
+									"key": "nodeName",
+									"value": "SecondRoot"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sibling Uniqueness",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"const jsonData = pm.response.json();",
+									"pm.test(\"Is SecureException\", function () {",
+									"    pm.expect(jsonData.type).to.eql(\"Secure\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"url": {
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api.user.tree.node.create"
+							],
+							"query": [
+								{
+									"key": "treeName",
+									"value": "{{treeName}}"
+								},
+								{
+									"key": "parentNodeId",
+									"value": "{{rootNodeId}}"
+								},
+								{
+									"key": "nodeName",
+									"value": "RenamedChild"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "stt-003: Recursive & Bulk Operations",
+			"item": [
+				{
+					"name": "Delete Node (Safe - Should Fail)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"const jsonData = pm.response.json();",
+									"pm.test(\"Error message matches safe deletion\", function () {",
+									"    pm.expect(jsonData.data.message).to.contain(\"delete all children\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"url": {
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api.user.tree.node.delete"
+							],
+							"query": [
+								{
+									"key": "nodeId",
+									"value": "{{rootNodeId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Node (Forced)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"url": {
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api.user.tree.node.delete"
+							],
+							"query": [
+								{
+									"key": "nodeId",
+									"value": "{{rootNodeId}}"
+								},
+								{
+									"key": "isForcedDeletion",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Empty Tree",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const jsonData = pm.response.json();",
+									"pm.test(\"Tree has no children\", function () {",
+									"    pm.expect(jsonData.children).to.be.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"url": {
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api.user.tree.get"
+							],
+							"query": [
+								{
+									"key": "treeName",
+									"value": "{{treeName}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "stt-004: Exception Journaling",
+			"item": [
+				{
+					"name": "Get Single Journal Entry",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const jsonData = pm.response.json();",
+									"pm.test(\"Journal entry matches original error\", function () {",
+									"    pm.expect(jsonData.eventId).to.eql(pm.environment.get(\"lastErrorEventId\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"url": {
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api.user.journal.getSingle"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{lastErrorEventId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Journal Range",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const jsonData = pm.response.json();",
+									"pm.test(\"Returns items\", function () {",
+									"    pm.expect(jsonData.items).to.be.an('array');",
+									"    pm.expect(jsonData.items.length).to.be.at.least(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"url": {
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api.user.journal.getRange"
+							],
+							"query": [
+								{
+									"key": "skip",
+									"value": "0"
+								},
+								{
+									"key": "take",
+									"value": "10"
+								}
+							],
+							"body": {
+								"mode": "raw",
+								"raw": "{}",
+								"options": {
+									"json": {
+										"language": "json"
+									}
+								}
+							}
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
