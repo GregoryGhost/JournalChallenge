@@ -5,10 +5,14 @@
       - POSTGRES_DB=journaldb
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    ports:
-      - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d journaldb" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      
   journalchallenge.presentation:
     image: journalchallenge.presentation
     build:
@@ -19,8 +23,14 @@
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DB_CONNECTION_STRING=Host=db;Database=journaldb;Username=postgres;Password=postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -fL http://localhost:8080/health || exit 1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 15
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
 volumes:
   db_data:
