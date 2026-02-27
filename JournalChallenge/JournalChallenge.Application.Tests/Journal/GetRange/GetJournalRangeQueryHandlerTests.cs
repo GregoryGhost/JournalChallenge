@@ -94,6 +94,6 @@ public sealed class GetJournalRangeQueryHandlerTests : BaseDbTest<AppDbContext>
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Items.Should().HaveCount(1);
-        result.Value.Items.First().EventId.Should().Be(1);
+        result.Value.Items.First().EventId.Should().Be("1");
     }
 }

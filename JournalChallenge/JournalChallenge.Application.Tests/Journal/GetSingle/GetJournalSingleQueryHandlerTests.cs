@@ -37,14 +37,14 @@ public sealed class GetJournalSingleQueryHandlerTests : BaseDbTest<AppDbContext>
         await DbContext.SaveChangesAsync();
 
         var handler = new GetJournalSingleQueryHandler(DbContext);
-        var query = new GetJournalSingleQuery(entry.Id);
+        var query = new GetJournalSingleQuery(entry.EventId);
 
         // Act
         var result = await handler.HandleAsync(query, CancellationToken.None);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.EventId.Should().Be(123);
+        result.Value.EventId.Should().Be("123");
         result.Value.Text.Should().Contain("msg");
         result.Value.Text.Should().Contain("stack");
     }

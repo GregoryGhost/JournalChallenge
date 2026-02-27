@@ -6,6 +6,6 @@ internal sealed class GetJournalSingleQueryValidator : AbstractValidator<GetJour
 {
     public GetJournalSingleQueryValidator()
     {
-        RuleFor(x => x.Id).GreaterThan(0);
+        RuleFor(x => x.EventId).GreaterThan(0);
     }
 }

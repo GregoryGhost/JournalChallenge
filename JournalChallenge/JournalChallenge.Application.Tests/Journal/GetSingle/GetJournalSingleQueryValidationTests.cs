@@ -16,7 +16,7 @@ public sealed class GetJournalSingleQueryValidationTests
     {
         var query = new GetJournalSingleQuery(0);
         var result = _validator.TestValidate(query);
-        result.ShouldHaveValidationErrorFor(x => x.Id);
+        result.ShouldHaveValidationErrorFor(x => x.EventId);
     }
 
     [Test]

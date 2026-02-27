@@ -18,7 +18,7 @@ internal sealed class GetJournalSingleQueryHandler(IApplicationDbContext context
         CancellationToken cancellationToken)
     {
         var entry = await context.ExceptionJournals
-                                 .FirstOrDefaultAsync(x => x.EventId == query.Id, cancellationToken);
+                                 .FirstOrDefaultAsync(x => x.EventId == query.EventId, cancellationToken);
 
         if (entry == null)
         {
