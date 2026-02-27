@@ -15,8 +15,7 @@ public static class DependencyInjection
     {
         return services
                .AddServices()
-               .AddDbContextWithEnvDbConnectionString<AppDbContext>(configuration)
-               .AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<AppDbContext>())
+               .AddDbContextWithEnvDbConnectionString<IApplicationDbContext, AppDbContext>(configuration)
                .AddHealthChecks(configuration)
                .AddApplicationBasement();;
     }

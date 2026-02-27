@@ -8,18 +8,15 @@
     {
         private const string DB_CONNECTION_STRING = "DB_CONNECTION_STRING";
 
-        public static IServiceCollection AddDbContextWithEnvDbConnectionString<TContext>(this IServiceCollection services, IConfiguration configuration) where TContext : DbContext
+        public static IServiceCollection AddDbContextWithEnvDbConnectionString<TContext, TContextImplementation>(
+            this IServiceCollection services, IConfiguration configuration)
+            where TContextImplementation : DbContext, TContext
         {
             var connectionString = GetDbConnectionString(configuration);
-    
-            services.AddDbContext<TContext>(optionsBuilder => optionsBuilder.UseNpgsql(connectionString));
+
+            services.AddDbContext<TContext, TContextImplementation>(optionsBuilder => optionsBuilder.UseNpgsql(connectionString));
 
             return services;
-        }
-
-        public static string? GetDbConnectionStringFromEnv()
-        {
-            return Environment.GetEnvironmentVariable(DB_CONNECTION_STRING);
         }
 
         public static string GetDbConnectionString(IConfiguration configuration)
@@ -28,8 +25,13 @@
                                    ?? configuration.GetConnectionString("DefaultConnection");
             if (string.IsNullOrEmpty(connectionString))
                 throw new ApplicationException("You should provide connection string to database.");
-            
+
             return connectionString;
+        }
+
+        public static string? GetDbConnectionStringFromEnv()
+        {
+            return Environment.GetEnvironmentVariable(DB_CONNECTION_STRING);
         }
     }
 }
