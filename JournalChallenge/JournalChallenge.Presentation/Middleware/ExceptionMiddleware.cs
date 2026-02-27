@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Json;
 using JournalChallenge.Application.Abstractions.Data;
 using JournalChallenge.Domain.Journal;
+using JournalChallenge.Presentation.DTOs;
 
 public class ExceptionMiddleware(RequestDelegate next, IServiceScopeFactory scopeFactory)
 {
@@ -72,46 +73,38 @@ public class ExceptionMiddleware(RequestDelegate next, IServiceScopeFactory scop
         if (exception is SecureException secureEx)
         {
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            response = new
+            response = new SecureResponseError
             {
-                type = "Secure",
-                id = eventId.ToString(),
-                data = new { message = secureEx.Message }
+                Id = eventId.ToString(),
+                Data = new ResponseErrorMessage { Message = secureEx.Message }
             };
         }
         else if (exception is ValidationException validationEx)
         {
             context.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
-            response = new
+            response = new ValidationResponseError
             {
-                type = "Validation",
-                id = eventId.ToString(),
-                data = new 
+                Id = eventId.ToString(),
+                Data = new ResponseErrorMessage
                 { 
-                    message = validationEx.Message,
-                    errors = validationEx.Errors
+                    Message = validationEx.Message,
+                    Errors = validationEx.Errors
                 }
             };
         }
         else if (exception is KeyNotFoundException notFoundEx)
         {
             context.Response.StatusCode = StatusCodes.Status404NotFound;
-            response = new
+            response = new NotFoundResponseError
             {
-                type = "NotFound",
-                id = eventId.ToString(),
-                data = new { message = notFoundEx.Message }
+                Id = eventId.ToString(),
+                Data = new ResponseErrorMessage { Message = notFoundEx.Message }
             };
         }
         else
         {
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            response = new
-            {
-                type = "Exception",
-                id = eventId.ToString(),
-                data = new { message = $"Internal server error ID = {eventId}" }
-            };
+            response = new ExceptionResponseError(eventId);
         }
 
         await context.Response.WriteAsync(JsonSerializer.Serialize(response));

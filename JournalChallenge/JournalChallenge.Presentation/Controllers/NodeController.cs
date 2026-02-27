@@ -4,6 +4,7 @@ using JournalChallenge.Application.Journal.CreateNode;
 using JournalChallenge.Application.Journal.DeleteNode;
 using JournalChallenge.Application.Journal.RenameNode;
 using JournalChallenge.Infrastructure.Core.Implementations;
+using JournalChallenge.Presentation.DTOs;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,7 @@ public class NodeController(
 
         if (result.IsSuccess)
         {
-            return Ok(new { id = result.Value });
+            return Ok(new EntityCreatedResponse(result.Value.ToString()));
         }
 
         throw resultsHandler.MatchProblem(result.Error);
